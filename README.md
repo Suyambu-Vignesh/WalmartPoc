@@ -1,2 +1,0 @@
-# WalmartPoc
-Poc for Walmart

@@ -1,9 +1,9 @@
 package com.estore.walmart.core.communication;
 
 /**
- * Created by Suyambu on 6/22/2017.
+ * Created by Suyambu on 6/23/2017.
  */
 
 public interface ResponseCallback<T> {
-    public void notify(T t);
+    public void notify(Response<T> t);
 }

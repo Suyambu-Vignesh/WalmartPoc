@@ -21,6 +21,19 @@ public class SplashFragment extends BaseFragment implements SplashViewPresenterO
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        mSplashPresenter.attach(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        mSplashPresenter.detach();
+    }
+
+    @Override
     protected void initFragment(View rootView) {
         hideActionBar();
         mSplashPresenter = WalmartApp.getAppObjectGraph().getSplashPresenter();

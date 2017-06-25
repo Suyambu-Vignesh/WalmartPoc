@@ -3,6 +3,11 @@ package com.estore.walmart.presenter;
 import android.app.Activity;
 import android.support.v4.app.Fragment;
 
+import com.estore.walmart.WalmartApp;
+import com.estore.walmart.model.BaseModel;
+import com.estore.walmart.opertaions.BaseViewOperation;
+import com.estore.walmart.opertaions.UIObservable;
+
 import java.lang.ref.WeakReference;
 
 /**
@@ -10,13 +15,20 @@ import java.lang.ref.WeakReference;
  */
 
 public abstract class BasePresenter {
-    protected WeakReference<Activity> activityWeakReference;
+    protected WeakReference<BaseViewOperation> view;
 
-    public void attach(Activity activity) {
-        activityWeakReference = new WeakReference<Activity>(activity);
+    public void attach(BaseViewOperation view) {
+        this.view = new WeakReference<BaseViewOperation>(view);
+        UIObservable uiObservable = WalmartApp.getAppObjectGraph().getUIObservable();
+        uiObservable.setUIObservable(this);
     }
 
     public void detach() {
-        activityWeakReference = null;
+        view = null;
+
+        UIObservable uiObservable = WalmartApp.getAppObjectGraph().getUIObservable();
+        uiObservable.setUIObservable(null);
     }
+
+    public abstract void updateUI(BaseModel baseModel);
 }

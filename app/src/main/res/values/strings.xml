@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">WalmartPOC</string>
+    <string name="fragment_home_title">Walmart</string>
+    <string name="fragment_detail_title">Item Details</string>
+    <string name="in_stock">In Stock</string>
+    <string name="out_stock">Out of Stock</string>
+    <string name="loading">Loading ....</string>
+    <string name="ratting">(3.5)</string>
+    <string name="price">$190</string>
+    <string name="product_title">Samsung 50\" Class 4K Ultra HD LED Smart TV - UN50JU650DFXZA"</string>
 </resources>

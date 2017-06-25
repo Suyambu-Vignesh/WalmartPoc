@@ -1,10 +1,24 @@
 
 package com.estore.walmart.pojo;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
-public class Product {
+public class Product implements PojoParser, Parcelable {
+    private static String KEY_PRODUCT_ID = "productId";
+    private static String KEY_PRODUCT_NMAE = "productName";
+    private static String KEY_SHORT_DESCRIPTION = "shortDescription";
+    private static String KEY_LONG_DESCRIPTION = "longDescription";
+    private static String KEY_PRICE = "price";
+    private static String KEY_PRODUCT_IMAGE = "productImage";
+    private static String KEY_REVIEW_RATING = "reviewRating";
+    private static String KEY_REVIEW_COUNT = "reviewCount";
+    private static String KEY_IN_STOCK = "inStock";
 
     private String productId;
     private String productName;
@@ -16,6 +30,30 @@ public class Product {
     private Integer reviewCount;
     private Boolean inStock;
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+
+    public Product() {
+    }
+
+    protected Product(Parcel in) {
+        productId = in.readString();
+        productName = in.readString();
+        shortDescription = in.readString();
+        longDescription = in.readString();
+        price = in.readString();
+        productImage = in.readString();
+    }
+
+    public static final Creator<Product> CREATOR = new Creator<Product>() {
+        @Override
+        public Product createFromParcel(Parcel in) {
+            return new Product(in);
+        }
+
+        @Override
+        public Product[] newArray(int size) {
+            return new Product[size];
+        }
+    };
 
     public String getProductId() {
         return productId;
@@ -97,4 +135,42 @@ public class Product {
         this.additionalProperties.put(name, value);
     }
 
+    //-------------------------------------------------------------------------------------------------
+    @Override
+    public JSONObject toJson() {
+        // // TODO: 6/23/2017 need to implement the Object to JSON.
+        return null;
+    }
+
+    @Override
+    public void fromJson(JSONObject jsonObject) {
+        if (jsonObject == null) {
+            return;
+        }
+
+        productId = jsonObject.optString(KEY_PRODUCT_ID);
+        productName = jsonObject.optString(KEY_PRODUCT_NMAE);
+        shortDescription = jsonObject.optString(KEY_SHORT_DESCRIPTION);
+        longDescription = jsonObject.optString(KEY_LONG_DESCRIPTION);
+        price = jsonObject.optString(KEY_PRICE);
+        productImage = jsonObject.optString(KEY_PRODUCT_IMAGE);
+        reviewRating = jsonObject.optDouble(KEY_REVIEW_RATING);
+        reviewCount = jsonObject.optInt(KEY_REVIEW_COUNT);
+        inStock = jsonObject.optBoolean(KEY_IN_STOCK);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(productId);
+        dest.writeString(productName);
+        dest.writeString(shortDescription);
+        dest.writeString(longDescription);
+        dest.writeString(price);
+        dest.writeString(productImage);
+    }
 }

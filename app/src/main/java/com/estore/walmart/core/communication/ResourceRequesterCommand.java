@@ -2,6 +2,9 @@ package com.estore.walmart.core.communication;
 
 import android.text.TextUtils;
 
+import com.estore.walmart.WalmartApp;
+import com.estore.walmart.model.BaseModel;
+import com.estore.walmart.opertaions.UIObservable;
 import com.estore.walmart.utils.AppUtils;
 import com.estore.walmart.BuildConfig;
 import com.estore.walmart.utils.WalmartAppException;
@@ -9,7 +12,7 @@ import com.estore.walmart.utils.WalmartAppException;
 import java.net.URL;
 
 /**
- * Created by Suyambu on 6/22/2017.
+ * Created by Suyambu on 6/23/2017.
  */
 
 public class ResourceRequesterCommand implements ResourceRequester.ResourceCommandInfo {
@@ -29,6 +32,10 @@ public class ResourceRequesterCommand implements ResourceRequester.ResourceComma
      */
     public Runnable getCommand() {
         return mResourceRequester;
+    }
+
+    public void setRequest(Request request) {
+        mRequest = request;
     }
 
     //----------------------------------------------------------------------------------------------
@@ -51,6 +58,14 @@ public class ResourceRequesterCommand implements ResourceRequester.ResourceComma
     }
 
     @Override
-    public void processResponse(String response) {
+    public void processResponse(final String resourceId,final BaseModel response) {
+        manager.postInUIThread(new Runnable() {
+            @Override
+            public void run() {
+                manager.cleanUpResource(resourceId);
+                UIObservable uiObservable = WalmartApp.getAppObjectGraph().getUIObservable();
+                uiObservable.notifyUI(response);
+            }
+        });
     }
 }

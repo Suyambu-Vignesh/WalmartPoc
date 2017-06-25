@@ -1,7 +1,7 @@
 package com.estore.walmart.core.communication;
 
 /**
- * Created by Suyambu on 6/22/2017.
+ * Created by Suyambu on 6/23/2017.
  */
 
 public class RequestBuilder {
@@ -16,14 +16,8 @@ public class RequestBuilder {
         mRequest.setRequestType(Request.REQUEST_GET);
     }
 
-    public RequestBuilder(String command, String requestType) {
-        mRequest = new Request();
-        mRequest.setCommand(command);
+    public RequestBuilder setRequestType(String requestType) {
         mRequest.setRequestType(requestType);
-    }
-
-    public RequestBuilder setResponseCallBack(ResponseCallback<Response> responseCallback) {
-        mRequest.setResponseCallback(responseCallback);
         return this;
     }
 

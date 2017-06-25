@@ -11,17 +11,19 @@ import android.support.v4.app.Fragment;
  */
 public interface SplashViewPresenterOperations {
 
-    /*
-    Operation which the Presenter want the view to perform
+    /**
+     * Operation which the Presenter want the view to perform
      */
-    interface ViewOperation {
-        void replaceFragment(Fragment fragment, boolean addToBackStack);
+    interface ViewOperation extends BaseViewOperation {
     }
 
-    /*
-    Operation which the Presenter has to perform on the behalf of view;
+    /**
+     * Operation which the Presenter has to perform on the behalf of view;
      */
     interface PresenterOperation {
+        /**
+         * Method which perform load the initial items.
+         */
         void loadData();
     }
 }

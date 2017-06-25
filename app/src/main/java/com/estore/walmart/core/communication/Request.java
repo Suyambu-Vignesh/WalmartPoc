@@ -3,7 +3,7 @@ package com.estore.walmart.core.communication;
 import java.util.UUID;
 
 /**
- * Created by Suyambu on 6/22/2017.
+ * Created by Suyambu on 6/23/2017.
  */
 
 public class Request {
@@ -14,13 +14,11 @@ public class Request {
     public static final String REQUEST_GET = "GET";
 
     private String requestType;
-    private UUID mId;
-    private ResponseCallback<Response> responseCallback;
     private String command;
     private String contentType;
 
     public Request() {
-        mId = UUID.randomUUID();
+
     }
 
     public String getRequestType() {
@@ -35,20 +33,12 @@ public class Request {
         return contentType == null ? CONTENT_JSON : contentType;
     }
 
-    public UUID getId() {
-        return mId;
+    public String getId() {
+        return command;
     }
 
     public String getCommand() {
         return command;
-    }
-
-    public ResponseCallback<Response> getResponseCallback() {
-        return responseCallback;
-    }
-
-    public void setResponseCallback(ResponseCallback<Response> responseCallback) {
-        this.responseCallback = responseCallback;
     }
 
     public void setCommand(String command) {

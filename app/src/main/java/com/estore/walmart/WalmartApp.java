@@ -3,13 +3,13 @@ package com.estore.walmart;
 import android.app.Application;
 import android.content.Context;
 
-import com.estore.walmart.core.ModuleInjection;
+import com.estore.walmart.core.communication.ModuleInjection;
 import com.estore.walmart.core.dependencyinjection.DebugModuleInjection;
 import com.estore.walmart.core.dependencyinjection.ReleaseModuleInjection;
 
 
 /**
- * Created by Suyambu on 6/22/2017.
+ * Created by Suyambu on 6/23/2017.
  */
 
 public class WalmartApp extends Application {

@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.estore.walmart.R;
+import com.estore.walmart.WalmartApp;
 import com.estore.walmart.utils.WalmartAppException;
 
 /**
@@ -40,6 +41,19 @@ public abstract class BaseFragment extends Fragment {
         super.onResume();
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        WalmartApp.getAppObjectGraph().getLogHandler().d(toString(), "On Start");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        WalmartApp.getAppObjectGraph().getLogHandler().d(toString(), "On Stop");
+    }
+
     protected abstract int getLayoutRes();
 
     protected abstract void initFragment(View rootView);
@@ -62,6 +76,13 @@ public abstract class BaseFragment extends Fragment {
         if (mActionBar != null) {
             mActionBar.hide();
         }
+    }
+
+    protected void setTitle(String title) {
+        if (mActionBar == null || title == null) {
+            return;
+        }
+        mActionBar.setTitle(title);
     }
 
     public void replaceFragment(Fragment fragment, boolean addToBackStack) {
