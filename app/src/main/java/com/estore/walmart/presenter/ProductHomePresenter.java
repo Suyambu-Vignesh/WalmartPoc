@@ -48,7 +48,7 @@ public class ProductHomePresenter extends BasePresenter implements ProductListPr
             Toast.makeText(
                     WalmartApp.getAppContext(),
                     WalmartApp.getAppContext().getResources().getString(R.string.network_error),
-                    Toast.LENGTH_LONG
+                    Toast.LENGTH_SHORT
             ).show();
 
             ProductListPresenterOperations.ViewOperation viewOperation = getView();
