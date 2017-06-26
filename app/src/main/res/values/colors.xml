@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#1285f9</color>
+    <color name="colorPrimaryDark">#215ab7</color>
+    <color name="colorAccent">#1285f9</color>
     <color name="white">#fff</color>
     <color name="transparent_white">#9fff</color>
     <color name="black">#000</color>
     <color name="light_gray">#f2f4f7</color>
+    <color name="gray">#d4d6d8</color>
     <color name="orange_red">#f44b42</color>
-    <color name="walmart_blue">#4198f4</color>
-    <color name="walmart_blue_dark">#045cea</color>
+    <color name="walmart_blue">#1285f9</color>
+    <color name="trans_walmart_blue">#551285f9</color>
+    <color name="walmart_blue_dark">#215ab7</color>
+    <color name="light_green">#13a063</color>
 </resources>

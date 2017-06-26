@@ -1,8 +1,12 @@
 package com.estore.walmart.views.fragments;
 
+import android.animation.Animator;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.estore.walmart.R;
@@ -17,7 +21,7 @@ import com.estore.walmart.views.adapterview.ProductHomeRecyclerViewAdapter;
  * Created by Suyambu on 6/24/2017.
  */
 
-public class ProductHomeFragment extends BaseFragment implements ProductListPresenterOperations.ViewOperation, View.OnClickListener {
+public class ProductHomeFragment extends BaseFragment implements ProductListPresenterOperations.ViewOperation, View.OnClickListener, MenuItem.OnMenuItemClickListener {
 
     private ProductHomePresenter mProductHomePresenter;
     private ProductHomeRecyclerViewAdapter mProductHomeRecyclerViewAdapter;
@@ -42,9 +46,9 @@ public class ProductHomeFragment extends BaseFragment implements ProductListPres
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
-        mProductHomePresenter.detach();
+    public void onDestroy() {
+        super.onDestroy();
+        mProductHomePresenter.detach(this);
     }
 
     @Override
@@ -55,7 +59,6 @@ public class ProductHomeFragment extends BaseFragment implements ProductListPres
     @Override
     protected void initFragment(View rootView) {
         showActionBar();
-        setTitle(getString(R.string.fragment_home_title));
 
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
 
@@ -79,8 +82,24 @@ public class ProductHomeFragment extends BaseFragment implements ProductListPres
         mRecyclerView.setLayoutManager(mProductHomePresenter.getLayoutManager());
         mRecyclerView.addOnScrollListener(mProductHomePresenter.getScrollListner());
         mRecyclerView.setAdapter(mProductHomeRecyclerViewAdapter);
+        mRecyclerView.scrollToPosition(0);
 
-        mProductHomeRecyclerViewAdapter.notifyDataSetChanged();
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void updateTitle() {
+        if (getActivity() == null) {
+            return;
+        }
+        setTitle(getString(R.string.fragment_home_title));
+        mProductHomePresenter.attach(this);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        //menu.findItem(R.id.sort).setOnMenuItemClickListener(this);
     }
 
     @Override
@@ -93,23 +112,42 @@ public class ProductHomeFragment extends BaseFragment implements ProductListPres
     }
 
     private void showScrollUpButton() {
-        if (mScrollUpButton.getVisibility() == View.VISIBLE) {
+        if (mScrollUpButton.isEnabled()) {
             return;
         }
 
-        mScrollUpButton.animate().translationY(0).start();
         mScrollUpButton.setEnabled(true);
+        mScrollUpButton.animate().translationY(0).setDuration(500).setListener(null).start();
         mScrollUpButton.setVisibility(View.VISIBLE);
     }
 
     private void hideScrollUpButton() {
-        if (mScrollUpButton.getVisibility() == View.INVISIBLE) {
+        if (!mScrollUpButton.isEnabled()) {
             return;
         }
-
-        mScrollUpButton.animate().translationY(AppUtils.getDimens(R.dimen.Y_trans)).start();
         mScrollUpButton.setEnabled(false);
-        mScrollUpButton.setVisibility(View.INVISIBLE);
+        mScrollUpButton.animate().
+                translationY(AppUtils.getDimens(R.dimen.Y_trans)).
+                setDuration(500).
+                setListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        mScrollUpButton.setVisibility(View.INVISIBLE);
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animation) {
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animation) {
+
+                    }
+                }).start();
     }
 
     @Override
@@ -146,8 +184,16 @@ public class ProductHomeFragment extends BaseFragment implements ProductListPres
 
         switch (viewId) {
             case R.id.floating_button:
-                mProductHomePresenter.scrollToTop();
+                mRecyclerView.scrollToPosition(0);
                 break;
         }
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        if (item.getItemId() == R.id.sort) {
+            return true;
+        }
+        return false;
     }
 }

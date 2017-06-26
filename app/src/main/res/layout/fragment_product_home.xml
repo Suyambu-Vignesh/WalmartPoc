@@ -32,7 +32,7 @@
             android:layout_width="@dimen/image_dimen"
             android:layout_height="wrap_content"
             android:text="@string/loading"
-            android:textColor="@color/walmart_blue_dark" />
+            android:textColor="@color/walmart_blue" />
     </LinearLayout>
 
 
@@ -45,6 +45,5 @@
         android:layout_alignParentRight="true"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:rotation="-90"
-        android:src="@android:drawable/ic_media_play" />
+        android:src="@drawable/ic_arrow_up" />
 </RelativeLayout>

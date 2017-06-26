@@ -31,15 +31,17 @@ public class NetworkManager {
         return connectivityReceiver.isOnline(context);
     }
 
-    public void registerNetworkObserver(Context context) {
+    public void registerNetworkObserver(Context context,ConnectivityReceiver.onConnectionStatusChanged listener) {
         if (context != null) {
             context.registerReceiver(connectivityReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+            connectivityReceiver.setOnConnectionChanged(listener);
         }
     }
 
-    public void unRegisterNetworkObserver(Context context) {
+    public void unRegisterNetworkObserver(Context context,ConnectivityReceiver.onConnectionStatusChanged listener) {
         if (context != null) {
             context.unregisterReceiver(connectivityReceiver);
+            connectivityReceiver.removeConnectionChanged(listener);
         }
     }
 }

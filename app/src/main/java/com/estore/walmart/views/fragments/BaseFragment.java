@@ -3,7 +3,9 @@ package com.estore.walmart.views.fragments;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +15,8 @@ import android.view.ViewGroup;
 
 import com.estore.walmart.R;
 import com.estore.walmart.WalmartApp;
+import com.estore.walmart.core.ViewInformation;
+import com.estore.walmart.model.WalmartDialogModel;
 import com.estore.walmart.utils.WalmartAppException;
 
 /**
@@ -33,12 +37,30 @@ public abstract class BaseFragment extends Fragment {
         }
 
         initFragment(rootView);
+        backStackWorker();
         return rootView;
+    }
+
+    private void backStackWorker() {
+        getActivity().getSupportFragmentManager().addOnBackStackChangedListener(
+                new FragmentManager.OnBackStackChangedListener() {
+                    public void onBackStackChanged() {
+                        updateTitle();
+                    }
+                });
     }
 
     @Override
     public void onResume() {
         super.onResume();
+
+        WalmartApp.getAppObjectGraph().getLogHandler().d(toString(), "On Resume");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        WalmartApp.getAppObjectGraph().getLogHandler().d(toString(), "On Pause");
     }
 
     @Override
@@ -57,6 +79,9 @@ public abstract class BaseFragment extends Fragment {
     protected abstract int getLayoutRes();
 
     protected abstract void initFragment(View rootView);
+
+    public void updateTitle() {
+    }
 
     protected boolean isFullView() {
         return false;
@@ -85,8 +110,8 @@ public abstract class BaseFragment extends Fragment {
         mActionBar.setTitle(title);
     }
 
-    public void replaceFragment(Fragment fragment, boolean addToBackStack) {
-        if (fragment == null) {
+    public void replaceFragment(ViewInformation viewInformation) {
+        if (viewInformation == null || viewInformation.fragment == null) {
             throw new WalmartAppException(WalmartAppException.VIEW_CANNOT_BE_NULL);
         }
 
@@ -95,10 +120,26 @@ public abstract class BaseFragment extends Fragment {
             return;
         }
         FragmentTransaction fragmentTransaction = ((AppCompatActivity) activity).getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.add(R.id.view_root, fragment);
-        if (addToBackStack) {
-            fragmentTransaction.addToBackStack(fragment.toString());
+
+        if (viewInformation.viewType == ViewInformation.VIEW_TYPE_FRAGMENT) {
+            fragmentTransaction.add(R.id.view_root, viewInformation.fragment);
+            if (viewInformation.addToBackStack) {
+                fragmentTransaction.addToBackStack(viewInformation.fragment.toString());
+            }
+
+            fragmentTransaction.setCustomAnimations(R.anim.enter,
+                    R.anim.exit,
+                    R.anim.re_enter,
+                    R.anim.re_exit);
+            fragmentTransaction.commit();
+        } else {
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            Fragment prev = getFragmentManager().findFragmentByTag(WalmartDialogModel.TAG);
+            if (prev != null) {
+                ft.remove(prev);
+            }
+            ft.addToBackStack(null);
+            ((DialogFragment) viewInformation.fragment).show(ft, WalmartDialogModel.TAG);
         }
-        fragmentTransaction.commit();
     }
 }

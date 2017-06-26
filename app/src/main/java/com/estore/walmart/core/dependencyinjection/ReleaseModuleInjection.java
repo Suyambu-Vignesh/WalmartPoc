@@ -13,12 +13,22 @@ import com.estore.walmart.core.communication.ResourceRequesterCommand;
 import com.estore.walmart.core.log.LogHandler;
 import com.estore.walmart.core.log.ReleaseLogHandler;
 import com.estore.walmart.model.ProductCatalogModel;
+import com.estore.walmart.model.ProductContentModel;
+import com.estore.walmart.model.ProductDetailModel;
+import com.estore.walmart.model.WalmartDialogModel;
 import com.estore.walmart.opertaions.UIObservable;
+import com.estore.walmart.pojo.DialogInfo;
+import com.estore.walmart.pojo.Product;
 import com.estore.walmart.pojoconverter.ResponseDeSerialization;
+import com.estore.walmart.presenter.ProductContentPresenter;
+import com.estore.walmart.presenter.ProductDetailPresenter;
 import com.estore.walmart.presenter.ProductHomePresenter;
 import com.estore.walmart.presenter.SplashPresenter;
+import com.estore.walmart.presenter.WalmartDialogPresenter;
 import com.estore.walmart.views.adapterview.ProductHomeRecyclerViewAdapter;
 import com.estore.walmart.views.fragments.SplashFragment;
+
+import java.util.List;
 
 /**
  * Created by Suyambu on 6/23/2017.
@@ -100,4 +110,32 @@ public class ReleaseModuleInjection implements ModuleInjection {
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         return linearLayoutManager;
     }
+
+
+    @Override
+    public ProductDetailModel getProductDetailProductModel(int index, List<Product> productList) {
+        return new ProductDetailModel(index, productList);
+    }
+
+    @Override
+    public ProductDetailPresenter getProductDetailPresenter(ProductDetailModel productDetailModel) {
+        return new ProductDetailPresenter(productDetailModel);
+    }
+
+    @Override
+    public ProductContentPresenter getProductContentPresenter(ProductContentModel model) {
+        return new ProductContentPresenter(model);
+    }
+
+
+    @Override
+    public WalmartDialogPresenter getWalmartDialogPresenter(WalmartDialogModel model) {
+        return new WalmartDialogPresenter(model);
+    }
+
+    @Override
+    public WalmartDialogModel getDialogModel(DialogInfo dialogInfo) {
+        return new WalmartDialogModel(dialogInfo);
+    }
 }
+

@@ -6,12 +6,22 @@ import com.estore.walmart.core.ConnectivityReceiver;
 import com.estore.walmart.core.NetworkManager;
 import com.estore.walmart.core.log.LogHandler;
 import com.estore.walmart.model.ProductCatalogModel;
+import com.estore.walmart.model.ProductContentModel;
+import com.estore.walmart.model.ProductDetailModel;
+import com.estore.walmart.model.WalmartDialogModel;
 import com.estore.walmart.opertaions.UIObservable;
+import com.estore.walmart.pojo.DialogInfo;
+import com.estore.walmart.pojo.Product;
 import com.estore.walmart.pojoconverter.ResponseDeSerialization;
+import com.estore.walmart.presenter.ProductContentPresenter;
+import com.estore.walmart.presenter.ProductDetailPresenter;
 import com.estore.walmart.presenter.ProductHomePresenter;
 import com.estore.walmart.presenter.SplashPresenter;
+import com.estore.walmart.presenter.WalmartDialogPresenter;
 import com.estore.walmart.views.adapterview.ProductHomeRecyclerViewAdapter;
 import com.estore.walmart.views.fragments.SplashFragment;
+
+import java.util.List;
 
 /**
  * Created by Suyambu on 6/23/2017.
@@ -123,4 +133,39 @@ public interface ModuleInjection {
      * @return the Recyler View LayoutManager.
      */
     RecyclerView.LayoutManager getLayoutManager();
+
+    /**
+     * Method return the intance of Product Model.
+     *
+     * @return instance of {@link ProductDetailModel}
+     */
+    ProductDetailModel getProductDetailProductModel(int index, List<Product> productList);
+
+    /**
+     * Method return the ProductDetailPresenter
+     *
+     * @return instance of {@link ProductDetailPresenter}
+     */
+    ProductDetailPresenter getProductDetailPresenter(ProductDetailModel model);
+
+    /**
+     * Method return the ProductDetailPresenter
+     *
+     * @return instance of {@link }
+     */
+    ProductContentPresenter getProductContentPresenter(ProductContentModel model);
+
+    /**
+     * Method return the Dilaog Presenter
+     * @param model instance of WalmartDialogModel
+     * @return Presenter
+     */
+    WalmartDialogPresenter getWalmartDialogPresenter(WalmartDialogModel model);
+
+    /**
+     * get the dialogModel for rendering the dialog
+     * @param dialogInfo style and other content.
+     * @return WalmartDialogModel
+     */
+    WalmartDialogModel getDialogModel(DialogInfo dialogInfo);
 }

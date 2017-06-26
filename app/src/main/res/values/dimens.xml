@@ -5,7 +5,8 @@
 
     <dimen name="image_dimen">160dp</dimen>
     <dimen name="card_height">180dp</dimen>
+    <dimen name="image_detail">300dp</dimen>
 
     <dimen name="fab_margin">16dp</dimen>
-    <dimen name="Y_trans">20dp</dimen>
+    <dimen name="Y_trans">200dp</dimen>
 </resources>

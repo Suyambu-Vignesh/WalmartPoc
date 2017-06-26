@@ -19,11 +19,7 @@ import java.util.concurrent.TimeUnit;
  * Created by Suyambu on 6/23/2017.
  */
 
-public class ResourceManager {
-    private static final int KEEP_ALIVE_TIME = 1;
-    private static final TimeUnit KEEP_ALIVE_TIME_UNIT = TimeUnit.SECONDS;
-    private static final int CORE_POOL_SIZE = 8;
-    private static final int MAXIMUM_POOL_SIZE = 8;
+public class ResourceManager extends BaseResourceManager{
 
     private ThreadPoolExecutor mDownloadThreadPool;
     private BlockingQueue<Runnable> mDownloadWorkQueue;

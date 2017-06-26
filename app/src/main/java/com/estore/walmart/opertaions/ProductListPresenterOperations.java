@@ -78,14 +78,12 @@ public interface ProductListPresenterOperations {
 
         /**
          * Method which return the Layout Manager
-         *
          * @return RecyclerView.LayoutManager instance
          */
         RecyclerView.LayoutManager getLayoutManager();
 
         /**
          * method which return the Scroll Listner
-         *
          * @return instance of Scroll Listner.
          */
         RecyclerView.OnScrollListener getScrollListner();
@@ -94,5 +92,10 @@ public interface ProductListPresenterOperations {
          * Method which scroll the list view to top
          */
         void scrollToTop();
+
+        /**
+         * Method which Show the details about the product
+         */
+        void onProductSelected(int itemPosition);
     }
 }

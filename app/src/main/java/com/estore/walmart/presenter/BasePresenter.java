@@ -4,9 +4,12 @@ import android.app.Activity;
 import android.support.v4.app.Fragment;
 
 import com.estore.walmart.WalmartApp;
+import com.estore.walmart.core.ViewInformation;
 import com.estore.walmart.model.BaseModel;
 import com.estore.walmart.opertaions.BaseViewOperation;
+import com.estore.walmart.opertaions.ProductListPresenterOperations;
 import com.estore.walmart.opertaions.UIObservable;
+import com.estore.walmart.utils.WalmartAppException;
 
 import java.lang.ref.WeakReference;
 
@@ -23,12 +26,26 @@ public abstract class BasePresenter {
         uiObservable.setUIObservable(this);
     }
 
-    public void detach() {
-        view = null;
+    public void detach(BaseViewOperation view) {
+        if (this.view.equals(view)) {
+            this.view = null;
 
-        UIObservable uiObservable = WalmartApp.getAppObjectGraph().getUIObservable();
-        uiObservable.setUIObservable(null);
+            UIObservable uiObservable = WalmartApp.getAppObjectGraph().getUIObservable();
+            uiObservable.setUIObservable(null);
+        }
     }
 
-    public abstract void updateUI(BaseModel baseModel);
+    public void updateUI(BaseModel baseModel) {
+        BaseViewOperation view = this.view.get();
+        if (view == null) {
+            return;
+        }
+        ViewInformation viewInformation = baseModel.getViewOperation();
+
+        if (viewInformation == null || viewInformation.fragment == null) {
+            throw new WalmartAppException(WalmartAppException.VIEW_CANNOT_BE_NULL);
+        }
+
+        view.replaceFragment(viewInformation);
+    }
 }

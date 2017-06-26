@@ -8,6 +8,7 @@ import com.estore.walmart.core.ViewInformation;
 import com.estore.walmart.core.communication.Request;
 import com.estore.walmart.core.communication.RequestBuilder;
 import com.estore.walmart.core.communication.ResourceManager;
+import com.estore.walmart.opertaions.UIObservable;
 import com.estore.walmart.pojo.Product;
 import com.estore.walmart.pojo.ProductInfo;
 import com.estore.walmart.utils.AppUtils;
@@ -20,7 +21,7 @@ import java.util.List;
  * Created by Suyambu on 6/23/2017.
  */
 
-public class ProductCatalogModel implements BaseModel, Parcelable {
+public class ProductCatalogModel extends BaseModel implements Parcelable {
     public static final String TAG = ProductCatalogModel.class.getSimpleName();
     private int mPageNumber;
     private int mMaxNumberItem;
@@ -42,6 +43,7 @@ public class ProductCatalogModel implements BaseModel, Parcelable {
     }
 
     protected ProductCatalogModel(Parcel in) {
+        super(in);
         mPageNumber = in.readInt();
         mMaxNumberItem = in.readInt();
         mTotalNumberOfProduct = in.readInt();
@@ -151,6 +153,7 @@ public class ProductCatalogModel implements BaseModel, Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
         dest.writeInt(mPageNumber);
         dest.writeInt(mMaxNumberItem);
         dest.writeInt(mTotalNumberOfProduct);
@@ -161,5 +164,19 @@ public class ProductCatalogModel implements BaseModel, Parcelable {
 
     public boolean canLoadMoreItem() {
         return !isReachedEnd;
+    }
+
+    public void loadDetailPage(int itemPosition) {
+        if (itemPosition < 0 || itemPosition >= getTotalNumberOfItem()) {
+            return;
+        }
+
+        ProductDetailModel productDetailModel = WalmartApp.getAppObjectGraph().getProductDetailProductModel(
+                itemPosition,
+                mProducts
+        );
+
+        UIObservable uiObservable = WalmartApp.getAppObjectGraph().getUIObservable();
+        uiObservable.notifyUI(productDetailModel);
     }
 }

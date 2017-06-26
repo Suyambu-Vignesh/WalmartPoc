@@ -5,6 +5,7 @@ import android.view.View;
 
 import com.estore.walmart.R;
 import com.estore.walmart.WalmartApp;
+import com.estore.walmart.core.ViewInformation;
 import com.estore.walmart.opertaions.SplashViewPresenterOperations;
 import com.estore.walmart.presenter.SplashPresenter;
 
@@ -27,10 +28,10 @@ public class SplashFragment extends BaseFragment implements SplashViewPresenterO
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
+    public void onDestroy() {
+        super.onDestroy();
 
-        mSplashPresenter.detach();
+        mSplashPresenter.detach(this);
     }
 
     @Override
@@ -41,7 +42,7 @@ public class SplashFragment extends BaseFragment implements SplashViewPresenterO
     }
 
     @Override
-    public void replaceFragment(Fragment fragment, boolean addToBackStack) {
-        super.replaceFragment(fragment, addToBackStack);
+    public void replaceFragment(ViewInformation viewInformation) {
+        super.replaceFragment(viewInformation);
     }
 }

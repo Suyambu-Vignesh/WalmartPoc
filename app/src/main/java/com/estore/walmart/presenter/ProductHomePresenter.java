@@ -1,14 +1,18 @@
 package com.estore.walmart.presenter;
 
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.estore.walmart.R;
 import com.estore.walmart.WalmartApp;
 import com.estore.walmart.core.ViewInformation;
 import com.estore.walmart.model.BaseModel;
+import com.estore.walmart.model.NetworkErrorModel;
 import com.estore.walmart.model.ProductCatalogModel;
 import com.estore.walmart.opertaions.ProductListPresenterOperations;
 import com.estore.walmart.utils.WalmartAppException;
@@ -26,6 +30,7 @@ public class ProductHomePresenter extends BasePresenter implements ProductListPr
         mProductCatalogModel = productCatalogModel;
 
         mLayoutManager = (LinearLayoutManager) WalmartApp.getAppObjectGraph().getLayoutManager();
+        mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
     }
 
     @Override
@@ -36,21 +41,18 @@ public class ProductHomePresenter extends BasePresenter implements ProductListPr
                 return;
             }
             viewOperation.notifyNewElements(
-                    mProductCatalogModel.getTotalNumberOfItem()-mProductCatalogModel.getNewItemCount(),
+                    mProductCatalogModel.getTotalNumberOfItem() - mProductCatalogModel.getNewItemCount(),
                     mProductCatalogModel.getNewItemCount()
             );
+        } else if (baseModel instanceof NetworkErrorModel) {
+            Toast.makeText(
+                    WalmartApp.getAppContext(),
+                    WalmartApp.getAppContext().getResources().getString(R.string.network_error),
+                    Toast.LENGTH_LONG
+            ).show();
+
         } else {
-            ProductListPresenterOperations.ViewOperation view = getView();
-            if (view == null) {
-                return;
-            }
-            ViewInformation viewInformation = baseModel.getViewOperation();
-
-            if (viewInformation == null || viewInformation.fragment == null) {
-                throw new WalmartAppException(WalmartAppException.VIEW_CANNOT_BE_NULL);
-            }
-
-            view.replaceFragment(viewInformation.fragment, viewInformation.addToBackStack);
+            super.updateUI(baseModel);
         }
     }
 
@@ -69,12 +71,12 @@ public class ProductHomePresenter extends BasePresenter implements ProductListPr
 
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
-        return new ProductViewHolder(inflater.inflate(R.layout.view_product_card, parent, false));
+        return new ProductViewHolder(inflater.inflate(R.layout.view_product_card, parent, false), this);
     }
 
     @Override
     public void onBindViewHolder(ProductViewHolder holder, int position) {
-        holder.updateView(mProductCatalogModel.getProduct(position));
+        holder.updateView(mProductCatalogModel.getProduct(position), position);
     }
 
     @Override
@@ -107,6 +109,22 @@ public class ProductHomePresenter extends BasePresenter implements ProductListPr
         return (ProductListPresenterOperations.ViewOperation) view.get();
     }
 
+    public void showSortOptions() {
+        ProductListPresenterOperations.ViewOperation view = getView();
+
+        if (view == null) {
+            return;
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(((Fragment) view).getContext());
+        builder.setTitle(R.string.sort);
+        //builder.set
+    }
+
+    @Override
+    public void onProductSelected(int itemPosition) {
+        mProductCatalogModel.loadDetailPage(itemPosition);
+    }
 
     //_____________________________________________________________________________________________
 

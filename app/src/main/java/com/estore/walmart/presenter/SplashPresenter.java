@@ -26,17 +26,7 @@ public class SplashPresenter extends BasePresenter implements SplashViewPresente
 
     @Override
     public void updateUI(BaseModel baseModel) {
-        SplashViewPresenterOperations.ViewOperation view = getView();
-        if (view == null) {
-            return;
-        }
-        ViewInformation viewInformation = baseModel.getViewOperation();
-
-        if (viewInformation == null || viewInformation.fragment == null) {
-            throw new WalmartAppException(WalmartAppException.VIEW_CANNOT_BE_NULL);
-        }
-
-        view.replaceFragment(viewInformation.fragment, viewInformation.addToBackStack);
+        super.updateUI(baseModel);
     }
 
     private SplashViewPresenterOperations.ViewOperation getView() {

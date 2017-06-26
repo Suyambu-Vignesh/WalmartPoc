@@ -4,6 +4,7 @@ import android.text.TextUtils;
 
 import com.estore.walmart.model.BaseModel;
 import com.estore.walmart.model.BussinessErrorModel;
+import com.estore.walmart.model.NetworkErrorModel;
 import com.estore.walmart.pojo.BasePojo;
 
 import org.json.JSONException;
@@ -27,7 +28,7 @@ public class ResponseDeSerialization {
     }
 
     public BaseModel parseResponse(String response) {
-        BussinessErrorModel bussinessErrorModel = new BussinessErrorModel();
+        BussinessErrorModel bussinessErrorModel = new BussinessErrorModel(BussinessErrorModel.TAG);
         if (TextUtils.isEmpty(response)) {
             return bussinessErrorModel;
         }

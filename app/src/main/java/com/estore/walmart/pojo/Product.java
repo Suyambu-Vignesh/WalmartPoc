@@ -3,9 +3,13 @@ package com.estore.walmart.pojo;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
+
+import com.estore.walmart.utils.AppUtils;
 
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,7 +38,7 @@ public class Product implements PojoParser, Parcelable {
     public Product() {
     }
 
-    protected Product(Parcel in) {
+    public Product(Parcel in) {
         productId = in.readString();
         productName = in.readString();
         shortDescription = in.readString();
@@ -64,7 +68,7 @@ public class Product implements PojoParser, Parcelable {
     }
 
     public String getProductName() {
-        return productName;
+        return productName == null ? AppUtils.emptyString() : productName;
     }
 
     public void setProductName(String productName) {
@@ -72,7 +76,7 @@ public class Product implements PojoParser, Parcelable {
     }
 
     public String getShortDescription() {
-        return shortDescription;
+        return shortDescription == null ? AppUtils.emptyString() : shortDescription;
     }
 
     public void setShortDescription(String shortDescription) {
@@ -88,7 +92,7 @@ public class Product implements PojoParser, Parcelable {
     }
 
     public String getPrice() {
-        return price;
+        return TextUtils.isEmpty(price) ? AppUtils.getEmptyDollar() : price;
     }
 
     public void setPrice(String price) {
@@ -104,7 +108,8 @@ public class Product implements PojoParser, Parcelable {
     }
 
     public Double getReviewRating() {
-        return reviewRating;
+        DecimalFormat df = new DecimalFormat("#.0");
+        return new Double(df.format(reviewRating));
     }
 
     public void setReviewRating(Double reviewRating) {

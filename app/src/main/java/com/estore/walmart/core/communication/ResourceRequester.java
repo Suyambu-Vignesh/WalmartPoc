@@ -51,7 +51,9 @@ public class ResourceRequester implements Runnable {
         }
 
         if (!mNetworkManager.isOnline(WalmartApp.getAppContext())) {
-            mResourceCommandInfo.processResponse(mResourceCommandInfo.getRequest().getId(), new NetworkErrorModel());
+            mResourceCommandInfo.processResponse(
+                    mResourceCommandInfo.getRequest().getId(),
+                    new NetworkErrorModel(NetworkErrorModel.TAG));
         }
 
         String responseString = "";
@@ -106,7 +108,10 @@ public class ResourceRequester implements Runnable {
                     responseDeSerialization.parseResponse(responseString)
             );
         } else {
-            mResourceCommandInfo.processResponse(mResourceCommandInfo.getRequest().getId(), new BussinessErrorModel());
+            mResourceCommandInfo.processResponse(
+                    mResourceCommandInfo.getRequest().getId(),
+                    new BussinessErrorModel(BussinessErrorModel.TAG)
+            );
         }
     }
 
