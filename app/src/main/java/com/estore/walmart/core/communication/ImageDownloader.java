@@ -55,7 +55,6 @@ public class ImageDownloader implements Runnable {
                 InputStream byteStream = null;
 
                 try {
-                    WalmartApp.getAppObjectGraph().getLogHandler().d("Suyambu1", "Downloading "+mCommand.getImageURL());
                     HttpURLConnection httpConn =
                             (HttpURLConnection) mCommand.getImageURL().openConnection();
 

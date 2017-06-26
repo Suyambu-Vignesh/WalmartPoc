@@ -1,7 +1,7 @@
 package com.estore.walmart.views.fragments;
 
+import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.TextView;
 
@@ -79,7 +79,7 @@ public class ErrorFragment extends BaseFragment implements ConnectivityReceiver.
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.text_open_settings) {
-            AppUtils.launchSettings(getContext());
+            AppUtils.launchSettings(getActivity());
         }
     }
 }

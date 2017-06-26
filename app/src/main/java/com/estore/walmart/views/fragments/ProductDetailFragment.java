@@ -1,7 +1,7 @@
 package com.estore.walmart.views.fragments;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
@@ -58,12 +58,11 @@ public class ProductDetailFragment extends BaseFragment implements ViewPager.OnP
         );
         mViewPager = (ViewPager) rootView.findViewById(R.id.view_pager);
         mViewPager.setAdapter(new ProductDetailAdapter(
-                getActivity().getSupportFragmentManager(),
+                getActivity().getFragmentManager(),
                 mProductDetailPresenter
         ));
         mViewPager.setCurrentItem(mProductDetailPresenter.getSelectedItem());
         mViewPager.addOnPageChangeListener(this);
-
     }
 
     @Override

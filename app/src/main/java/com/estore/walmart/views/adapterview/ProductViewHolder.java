@@ -1,12 +1,13 @@
 package com.estore.walmart.views.adapterview;
 
+import android.os.Build;
+import android.support.v7.widget.AppCompatRatingBar;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.estore.walmart.R;
-import com.estore.walmart.WalmartApp;
 import com.estore.walmart.pojo.Product;
 import com.estore.walmart.presenter.ProductHomePresenter;
 import com.estore.walmart.utils.AppUtils;
@@ -24,7 +25,7 @@ public class ProductViewHolder extends RecyclerView.ViewHolder implements View.O
     private TextView mPriceText;
     private TextView mProductStatusText;
     private TextView mRattingText;
-    private RatingBar mRatingBar;
+    private AppCompatRatingBar mRatingBar;
     private AnimatedImageView mAnimatedImageView;
     private ProductHomePresenter mProductHomePresenter;
     private int mItemPosition;
@@ -36,8 +37,14 @@ public class ProductViewHolder extends RecyclerView.ViewHolder implements View.O
         mPriceText = (TextView) itemView.findViewById(R.id.text_price);
         mProductStatusText = (TextView) itemView.findViewById(R.id.text_stock_status);
         mRattingText = (TextView) itemView.findViewById(R.id.text_ratting);
-        mRatingBar = (RatingBar) itemView.findViewById(R.id.rating_bar);
+        mRatingBar = (AppCompatRatingBar) itemView.findViewById(R.id.rating_bar);
         mAnimatedImageView = (AnimatedImageView) itemView.findViewById(R.id.image_view);
+
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mRatingBar.setVisibility(View.VISIBLE);
+        } else {
+            mRatingBar.setVisibility(View.INVISIBLE);
+        }
 
         itemView.setOnClickListener(this);
     }

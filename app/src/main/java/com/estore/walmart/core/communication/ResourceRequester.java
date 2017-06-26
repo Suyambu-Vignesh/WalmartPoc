@@ -45,7 +45,6 @@ public class ResourceRequester implements Runnable {
     @Override
     public void run() {
         android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
-        WalmartApp.getAppObjectGraph().getLogHandler().d("Suyambu", "Process Started for making Server call");
         if (mResourceCommandInfo == null) {
             throw new WalmartAppException(WalmartAppException.EXCEPTION_RESOURCE_COMMAND_NULL);
         }
@@ -62,7 +61,6 @@ public class ResourceRequester implements Runnable {
         HttpURLConnection httpURLConnection = null;
         try {
 
-            WalmartApp.getAppObjectGraph().getLogHandler().d("Suyambu", "Process Started for making Server call " + mResourceCommandInfo.getUrl());
             httpURLConnection = (HttpURLConnection) mResourceCommandInfo.getUrl().openConnection();
             httpURLConnection.setRequestMethod(mResourceCommandInfo.getRequest().getRequestType());
             httpURLConnection.setDoInput(true);
@@ -100,7 +98,6 @@ public class ResourceRequester implements Runnable {
                 httpURLConnection.disconnect();
         }
 
-        WalmartApp.getAppObjectGraph().getLogHandler().d("Suyambu", "Process Completed for making Server call " + responseString);
         if (!TextUtils.isEmpty(responseString)) {
             ResponseDeSerialization responseDeSerialization = WalmartApp.getAppObjectGraph().
                     getResponseDeSerialization();

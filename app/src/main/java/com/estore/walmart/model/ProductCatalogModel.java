@@ -102,7 +102,6 @@ public class ProductCatalogModel extends BaseModel implements Parcelable {
 
         Request request = new RequestBuilder(url)
                 .build();
-        WalmartApp.getAppObjectGraph().getLogHandler().d("Suyambu", url + " Making request " + toString());
         mResourceManager.processRequest(request);
     }
 

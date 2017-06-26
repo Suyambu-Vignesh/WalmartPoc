@@ -65,7 +65,6 @@ public class ResourceManager extends BaseResourceManager{
         }
         resourceRequesterCommand.setRequest(request);
 
-        WalmartApp.getAppObjectGraph().getLogHandler().d("Suyambu", "Executing Making request " + toString());
         mDownloadThreadPool.execute(resourceRequesterCommand.getCommand());
     }
 

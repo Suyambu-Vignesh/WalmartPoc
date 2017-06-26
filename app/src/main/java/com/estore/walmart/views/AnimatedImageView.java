@@ -144,9 +144,10 @@ public class AnimatedImageView extends AppCompatImageView {
     public void setImageBitmap(Bitmap paramBitmap) {
         AnimatedImageView.super.setImageBitmap(paramBitmap);
         if (true) {
+            // todo fix ASAP 6/26/2107
             return;
         }
-        this.animate().alpha(0).setListener(new Animator.AnimatorListener() {
+        this.animate().alpha(0).setDuration(0).setListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
 
@@ -154,7 +155,6 @@ public class AnimatedImageView extends AppCompatImageView {
 
             @Override
             public void onAnimationEnd(Animator animation) {
-
 
                 AnimatedImageView.this.animate().alpha(1).setDuration(1000).start();
             }
@@ -215,7 +215,6 @@ public class AnimatedImageView extends AppCompatImageView {
      * @param cacheFlag  Whether to use caching when doing downloading and decoding
      */
     public void setImageURL(URL pictureURL, boolean cacheFlag) {
-        WalmartApp.getAppObjectGraph().getLogHandler().d("Suyambu1", "Seeting url " + pictureURL);
         if (mImageURL != null) {
 
             if (!mImageURL.equals(pictureURL)) {

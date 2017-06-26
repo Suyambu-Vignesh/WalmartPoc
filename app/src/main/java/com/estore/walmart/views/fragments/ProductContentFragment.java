@@ -1,11 +1,11 @@
 package com.estore.walmart.views.fragments;
 
+import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.v7.widget.AppCompatRatingBar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
-import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,7 +37,7 @@ public class ProductContentFragment extends BaseFragment implements ProductConte
     private TextView mPriceText;
     private TextView mViewMoreText;
     private TextView mRattingCountText;
-    private RatingBar mRatingBar;
+    private AppCompatRatingBar mRatingBar;
     private Button mCartButton;
 
     @Override
@@ -61,7 +61,7 @@ public class ProductContentFragment extends BaseFragment implements ProductConte
         mPriceText = (TextView) rootView.findViewById(R.id.text_price);
         mViewMoreText = (TextView) rootView.findViewById(R.id.text_view_more);
         mRattingCountText = (TextView) rootView.findViewById(R.id.text_ratting_count);
-        mRatingBar = (RatingBar) rootView.findViewById(R.id.rating_bar);
+        mRatingBar = (AppCompatRatingBar) rootView.findViewById(R.id.rating_bar);
 
         mCartButton = (Button) rootView.findViewById(R.id.button_add_to_cart);
 
@@ -116,7 +116,7 @@ public class ProductContentFragment extends BaseFragment implements ProductConte
         if (v.getId() == R.id.text_view_more) {
             mProductContentPresenter.showFullDescription();
         } else {
-            Toast.makeText(getContext(), getString(R.string.work_in_progress), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getString(R.string.work_in_progress), Toast.LENGTH_SHORT).show();
         }
     }
 }

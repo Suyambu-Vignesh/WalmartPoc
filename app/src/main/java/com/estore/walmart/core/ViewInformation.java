@@ -1,6 +1,7 @@
 package com.estore.walmart.core;
 
-import android.support.v4.app.Fragment;
+
+import android.app.Fragment;
 
 /**
  * Created by Suyambu on 6/24/2017.

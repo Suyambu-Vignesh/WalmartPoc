@@ -1,12 +1,12 @@
 package com.estore.walmart.views.fragments;
 
 import android.app.Activity;
+import android.app.DialogFragment;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -42,7 +42,7 @@ public abstract class BaseFragment extends Fragment {
     }
 
     private void backStackWorker() {
-        getActivity().getSupportFragmentManager().addOnBackStackChangedListener(
+        getActivity().getFragmentManager().addOnBackStackChangedListener(
                 new FragmentManager.OnBackStackChangedListener() {
                     public void onBackStackChanged() {
                         updateTitle();
@@ -54,26 +54,22 @@ public abstract class BaseFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        WalmartApp.getAppObjectGraph().getLogHandler().d(toString(), "On Resume");
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        WalmartApp.getAppObjectGraph().getLogHandler().d(toString(), "On Pause");
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        WalmartApp.getAppObjectGraph().getLogHandler().d(toString(), "On Start");
     }
 
     @Override
     public void onStop() {
         super.onStop();
 
-        WalmartApp.getAppObjectGraph().getLogHandler().d(toString(), "On Stop");
     }
 
     protected abstract int getLayoutRes();
@@ -119,7 +115,7 @@ public abstract class BaseFragment extends Fragment {
         if (activity == null) {
             return;
         }
-        FragmentTransaction fragmentTransaction = ((AppCompatActivity) activity).getSupportFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction = (activity).getFragmentManager().beginTransaction();
 
         if (viewInformation.viewType == ViewInformation.VIEW_TYPE_FRAGMENT) {
             fragmentTransaction.add(R.id.view_root, viewInformation.fragment);
@@ -127,10 +123,6 @@ public abstract class BaseFragment extends Fragment {
                 fragmentTransaction.addToBackStack(viewInformation.fragment.toString());
             }
 
-            fragmentTransaction.setCustomAnimations(R.anim.enter,
-                    R.anim.exit,
-                    R.anim.re_enter,
-                    R.anim.re_exit);
             fragmentTransaction.commit();
         } else {
             FragmentTransaction ft = getFragmentManager().beginTransaction();

@@ -1,9 +1,11 @@
 package com.estore.walmart.core.dependencyinjection;
 
 import android.content.Context;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.estore.walmart.R;
 import com.estore.walmart.WalmartApp;
 import com.estore.walmart.core.AppCache;
 import com.estore.walmart.core.ConnectivityReceiver;
@@ -107,10 +109,15 @@ public class DebugModuleInjection implements ModuleInjection {
 
     @Override
     public RecyclerView.LayoutManager getLayoutManager() {
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(WalmartApp.getAppContext());
-        linearLayoutManager.setStackFromEnd(true);
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        return linearLayoutManager;
+        if (WalmartApp.getAppContext().getResources().getBoolean(R.bool.isTablet)) {
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(WalmartApp.getAppContext(), 2, GridLayoutManager.HORIZONTAL, false);
+            return gridLayoutManager;
+        } else {
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(WalmartApp.getAppContext());
+            linearLayoutManager.setStackFromEnd(true);
+            linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+            return linearLayoutManager;
+        }
     }
 
     @Override

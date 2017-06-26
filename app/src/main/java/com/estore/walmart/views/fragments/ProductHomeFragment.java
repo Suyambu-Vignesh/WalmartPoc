@@ -96,6 +96,7 @@ public class ProductHomeFragment extends BaseFragment implements ProductListPres
         }
         setTitle(getString(R.string.fragment_home_title));
         mProductHomePresenter.attach(this);
+
     }
 
     @Override
@@ -119,7 +120,7 @@ public class ProductHomeFragment extends BaseFragment implements ProductListPres
         }
 
         mScrollUpButton.setEnabled(true);
-        mScrollUpButton.animate().translationY(0).setDuration(500).setListener(null).start();
+        mScrollUpButton.animate().setStartDelay(200).translationY(0).setDuration(500).setListener(null).start();
         mScrollUpButton.setVisibility(View.VISIBLE);
     }
 
