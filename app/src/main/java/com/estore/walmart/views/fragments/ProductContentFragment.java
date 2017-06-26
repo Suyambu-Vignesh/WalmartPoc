@@ -1,6 +1,7 @@
 package com.estore.walmart.views.fragments;
 
 import android.app.Fragment;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatRatingBar;
 import android.text.TextUtils;
@@ -67,7 +68,11 @@ public class ProductContentFragment extends BaseFragment implements ProductConte
 
         mCartButton.setOnClickListener(this);
         mViewMoreText.setOnClickListener(this);
-
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mRatingBar.setVisibility(View.VISIBLE);
+        } else {
+            mRatingBar.setVisibility(View.INVISIBLE);
+        }
         refreshUI(mProductContentPresenter.getProduct());
     }
 
