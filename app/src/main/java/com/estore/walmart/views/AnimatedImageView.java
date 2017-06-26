@@ -141,7 +141,11 @@ public class AnimatedImageView extends AppCompatImageView {
     }
 
     @Override
-    public void setImageBitmap(final Bitmap paramBitmap) {
+    public void setImageBitmap(Bitmap paramBitmap) {
+        AnimatedImageView.super.setImageBitmap(paramBitmap);
+        if (true) {
+            return;
+        }
         this.animate().alpha(0).setListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
@@ -151,7 +155,7 @@ public class AnimatedImageView extends AppCompatImageView {
             @Override
             public void onAnimationEnd(Animator animation) {
 
-                AnimatedImageView.super.setImageBitmap(paramBitmap);
+
                 AnimatedImageView.this.animate().alpha(1).setDuration(1000).start();
             }
 

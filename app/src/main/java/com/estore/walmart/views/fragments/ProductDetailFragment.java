@@ -46,8 +46,8 @@ public class ProductDetailFragment extends BaseFragment implements ViewPager.OnP
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
+    public void onPause() {
+        super.onPause();
         mProductDetailPresenter.detach(this);
     }
 

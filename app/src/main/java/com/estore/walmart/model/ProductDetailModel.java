@@ -3,6 +3,8 @@ package com.estore.walmart.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.estore.walmart.WalmartApp;
+import com.estore.walmart.core.AppCache;
 import com.estore.walmart.core.ViewInformation;
 import com.estore.walmart.pojo.Product;
 import com.estore.walmart.views.fragments.ProductDetailFragment;
@@ -18,17 +20,16 @@ import java.util.List;
  */
 public class ProductDetailModel extends BaseModel implements Parcelable {
     public static String TAG = "ProductDetailModel";
-
+    private AppCache mAppCache;
     private int mSelectedPosition;
-    private List<Product> mProducts;
 
     private ProductDetailModel() {
         setId(TAG);
     }
 
-    public ProductDetailModel(int selectedPosition, List<Product> products) {
+    public ProductDetailModel(int selectedPosition) {
         mSelectedPosition = selectedPosition;
-        this.mProducts = products;
+        mAppCache = WalmartApp.getAppObjectGraph().getCache();
     }
 
     @Override
@@ -48,13 +49,11 @@ public class ProductDetailModel extends BaseModel implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
         dest.writeInt(mSelectedPosition);
-        dest.writeTypedList(mProducts);
     }
 
     protected ProductDetailModel(Parcel in) {
         super(in);
         mSelectedPosition = in.readInt();
-        mProducts = in.createTypedArrayList(Product.CREATOR);
     }
 
     public static final Creator<ProductDetailModel> CREATOR = new Creator<ProductDetailModel>() {
@@ -70,6 +69,7 @@ public class ProductDetailModel extends BaseModel implements Parcelable {
     };
 
     public int getTotalElements() {
+        List<Product> mProducts = mAppCache.getProducts();
         if (mProducts == null) {
             return 0;
         }
@@ -85,6 +85,7 @@ public class ProductDetailModel extends BaseModel implements Parcelable {
     }
 
     public Product getProductAt(int index) {
+        List<Product> mProducts = mAppCache.getProducts();
         if (mProducts == null || index < 0 || index >= mProducts.size()) {
             return null;
         }

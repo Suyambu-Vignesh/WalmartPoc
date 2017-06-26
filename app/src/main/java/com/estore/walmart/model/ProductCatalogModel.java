@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.estore.walmart.WalmartApp;
+import com.estore.walmart.core.AppCache;
 import com.estore.walmart.core.ViewInformation;
 import com.estore.walmart.core.communication.Request;
 import com.estore.walmart.core.communication.RequestBuilder;
@@ -27,13 +28,17 @@ public class ProductCatalogModel extends BaseModel implements Parcelable {
     private int mMaxNumberItem;
     private int mTotalNumberOfProduct;
     private String mETag;
-    private List<Product> mProducts;
     private String mCommand;
     private ResourceManager mResourceManager;
     private boolean isReachedEnd;
     private int mNewNumberOfItem;
+    private AppCache mAppCache;
 
     private static ProductCatalogModel sProductCatalogModel;
+
+    {
+        mAppCache = WalmartApp.getAppObjectGraph().getCache();
+    }
 
     private ProductCatalogModel(int maxNumberOfItem, String command) {
         this.mMaxNumberItem = maxNumberOfItem;
@@ -48,7 +53,6 @@ public class ProductCatalogModel extends BaseModel implements Parcelable {
         mMaxNumberItem = in.readInt();
         mTotalNumberOfProduct = in.readInt();
         mETag = in.readString();
-        mProducts = in.createTypedArrayList(Product.CREATOR);
         mCommand = in.readString();
     }
 
@@ -72,6 +76,7 @@ public class ProductCatalogModel extends BaseModel implements Parcelable {
     }
 
     public int getTotalNumberOfItem() {
+        List<Product> mProducts = mAppCache.getProducts();
         if (mProducts == null) {
             return 0;
         }
@@ -113,6 +118,8 @@ public class ProductCatalogModel extends BaseModel implements Parcelable {
             return;
         }
 
+        List<Product> mProducts = mAppCache.getProducts();
+
         if (mProducts == null) {
             mProducts = new ArrayList<>();
         }
@@ -131,6 +138,7 @@ public class ProductCatalogModel extends BaseModel implements Parcelable {
     }
 
     public Product getProduct(int position) {
+        List<Product> mProducts = mAppCache.getProducts();
         if (mProducts == null || mProducts.size() < position) {
             return null;
         } else {
@@ -158,7 +166,6 @@ public class ProductCatalogModel extends BaseModel implements Parcelable {
         dest.writeInt(mMaxNumberItem);
         dest.writeInt(mTotalNumberOfProduct);
         dest.writeString(mETag);
-        dest.writeTypedList(mProducts);
         dest.writeString(mCommand);
     }
 
@@ -172,8 +179,7 @@ public class ProductCatalogModel extends BaseModel implements Parcelable {
         }
 
         ProductDetailModel productDetailModel = WalmartApp.getAppObjectGraph().getProductDetailProductModel(
-                itemPosition,
-                mProducts
+                itemPosition
         );
 
         UIObservable uiObservable = WalmartApp.getAppObjectGraph().getUIObservable();

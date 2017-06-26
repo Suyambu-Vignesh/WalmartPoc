@@ -54,6 +54,8 @@ public class ResourceRequester implements Runnable {
             mResourceCommandInfo.processResponse(
                     mResourceCommandInfo.getRequest().getId(),
                     new NetworkErrorModel(NetworkErrorModel.TAG));
+
+            return;
         }
 
         String responseString = "";

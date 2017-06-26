@@ -28,8 +28,8 @@ public class SplashFragment extends BaseFragment implements SplashViewPresenterO
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onPause() {
+        super.onPause();
 
         mSplashPresenter.detach(this);
     }

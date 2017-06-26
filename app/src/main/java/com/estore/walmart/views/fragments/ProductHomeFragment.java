@@ -46,8 +46,8 @@ public class ProductHomeFragment extends BaseFragment implements ProductListPres
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onPause() {
+        super.onPause();
         mProductHomePresenter.detach(this);
     }
 
@@ -67,6 +67,8 @@ public class ProductHomeFragment extends BaseFragment implements ProductListPres
         mScrollUpButton.setTranslationY(AppUtils.getDimens(R.dimen.Y_trans));
         mScrollUpButton.setEnabled(false);
         mScrollUpButton.setVisibility(View.INVISIBLE);
+
+        setTitle(getString(R.string.fragment_home_title));
 
         mProgressView = rootView.findViewById(R.id.layout_progress);
         mProgressView.setAlpha(0);

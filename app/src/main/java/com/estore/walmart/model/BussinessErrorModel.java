@@ -20,7 +20,7 @@ public class BussinessErrorModel extends BaseModel {
 
     public BussinessErrorModel(String id) {
         super(id);
-        message = WalmartApp.getAppContext().getResources().getString(R.string.network_error);
+        message = WalmartApp.getAppContext().getResources().getString(R.string.bussiness_error);
     }
 
     @Override

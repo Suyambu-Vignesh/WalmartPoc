@@ -12,6 +12,8 @@ import com.estore.walmart.opertaions.UIObservable;
 import com.estore.walmart.utils.WalmartAppException;
 
 import java.lang.ref.WeakReference;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * Created by Suyambu on 6/23/2017.
@@ -20,10 +22,16 @@ import java.lang.ref.WeakReference;
 public abstract class BasePresenter {
     protected WeakReference<BaseViewOperation> view;
 
+    Queue<BaseModel> mPendingModels = new LinkedList<>();
+
     public void attach(BaseViewOperation view) {
         this.view = new WeakReference<BaseViewOperation>(view);
         UIObservable uiObservable = WalmartApp.getAppObjectGraph().getUIObservable();
         uiObservable.setUIObservable(this);
+
+        while (mPendingModels.size() > 0) {
+            updateUI(mPendingModels.poll());
+        }
     }
 
     public void detach(BaseViewOperation view) {
@@ -38,6 +46,7 @@ public abstract class BasePresenter {
     public void updateUI(BaseModel baseModel) {
         BaseViewOperation view = this.view.get();
         if (view == null) {
+            mPendingModels.add(baseModel);
             return;
         }
         ViewInformation viewInformation = baseModel.getViewOperation();

@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.estore.walmart.WalmartApp;
+import com.estore.walmart.core.AppCache;
 import com.estore.walmart.core.ConnectivityReceiver;
 import com.estore.walmart.core.communication.ModuleInjection;
 import com.estore.walmart.core.NetworkManager;
@@ -113,8 +114,8 @@ public class DebugModuleInjection implements ModuleInjection {
     }
 
     @Override
-    public ProductDetailModel getProductDetailProductModel(int index, List<Product> productList) {
-        return new ProductDetailModel(index, productList);
+    public ProductDetailModel getProductDetailProductModel(int index) {
+        return new ProductDetailModel(index);
     }
 
     @Override
@@ -135,5 +136,10 @@ public class DebugModuleInjection implements ModuleInjection {
     @Override
     public WalmartDialogModel getDialogModel(DialogInfo dialogInfo) {
         return new WalmartDialogModel(dialogInfo);
+    }
+
+    @Override
+    public AppCache getCache() {
+        return AppCache.getInstance();
     }
 }

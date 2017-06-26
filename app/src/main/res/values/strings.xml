@@ -30,6 +30,6 @@
 
     <string name="zero_dollar">--</string>
 
-    <string name="network_error">Please check your network connection !!!</string>
+    <string name="network_error">Please switch on your network connection. We will connect you back.</string>
     <string name="bussiness_error">Sorry!!! Something went wrong please try later</string>
 </resources>

@@ -2,6 +2,7 @@ package com.estore.walmart.core.communication;
 
 import android.support.v7.widget.RecyclerView;
 
+import com.estore.walmart.core.AppCache;
 import com.estore.walmart.core.ConnectivityReceiver;
 import com.estore.walmart.core.NetworkManager;
 import com.estore.walmart.core.log.LogHandler;
@@ -139,7 +140,7 @@ public interface ModuleInjection {
      *
      * @return instance of {@link ProductDetailModel}
      */
-    ProductDetailModel getProductDetailProductModel(int index, List<Product> productList);
+    ProductDetailModel getProductDetailProductModel(int index);
 
     /**
      * Method return the ProductDetailPresenter
@@ -157,6 +158,7 @@ public interface ModuleInjection {
 
     /**
      * Method return the Dilaog Presenter
+     *
      * @param model instance of WalmartDialogModel
      * @return Presenter
      */
@@ -164,8 +166,14 @@ public interface ModuleInjection {
 
     /**
      * get the dialogModel for rendering the dialog
+     *
      * @param dialogInfo style and other content.
      * @return WalmartDialogModel
      */
     WalmartDialogModel getDialogModel(DialogInfo dialogInfo);
+
+    /**
+     * Return the app cache
+     */
+    AppCache getCache();
 }

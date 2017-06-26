@@ -51,6 +51,12 @@ public class ProductHomePresenter extends BasePresenter implements ProductListPr
                     Toast.LENGTH_LONG
             ).show();
 
+            ProductListPresenterOperations.ViewOperation viewOperation = getView();
+            if (viewOperation == null) {
+                return;
+            }
+            viewOperation.hideProgress();
+
         } else {
             super.updateUI(baseModel);
         }
@@ -155,7 +161,7 @@ public class ProductHomePresenter extends BasePresenter implements ProductListPr
             }
 
 
-            view.showScrollUpFloatingButton(firstVisibleItemPosition != 0);
+            //view.showScrollUpFloatingButton(firstVisibleItemPosition != 0);
         }
     };
 }

@@ -60,7 +60,7 @@ public class ProductViewHolder extends RecyclerView.ViewHolder implements View.O
         );
         mProductStatusText.setBackgroundColor(
                 product.getInStock() ? AppUtils.getColor(R.color.light_green) :
-                        AppUtils.getColor(R.color.light_green)
+                        AppUtils.getColor(R.color.orange_red)
         );
         mRatingBar.setRating(new Float(product.getReviewRating()));
 
