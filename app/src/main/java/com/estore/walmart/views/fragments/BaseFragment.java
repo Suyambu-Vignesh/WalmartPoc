@@ -123,7 +123,7 @@ public abstract class BaseFragment extends Fragment {
                 fragmentTransaction.addToBackStack(viewInformation.fragment.toString());
             }
 
-            fragmentTransaction.commit();
+            fragmentTransaction.commitAllowingStateLoss();
         } else {
             FragmentTransaction ft = getFragmentManager().beginTransaction();
             Fragment prev = getFragmentManager().findFragmentByTag(WalmartDialogModel.TAG);
